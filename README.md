@@ -1,104 +1,42 @@
+Current Software version: 27 Mar 2024
 # UPT_Modeling
-This repo was created to help track changes for each commit and to help understand the changes to the code during each iteration as well as to recover potentially old versions of the code that may have been helpful. This is a private repo and access is only limited to those with a need to know and a need to code. Files should be saved locally to prevent leakage of data.
+This program and code was created as part of Sheppard AFB, 80th FTW, A59 innovation team. The python code specifically takes the daily output from GTIMs and then cleans the daily files while also creating a composite to add for the A3S Data Tracker. The intent for this code is to add them to a Teams location and continually update there to ensure that Power BI applications pull the most current data while enabling future data processing and cross correlation among flights and individuals. 
 
-#### 24 Mar Update
-- Successfully added instructions, error log, and more features to the GUI for operation.
-- Tested the GUI out with example files and was able to get it to run with multiple files and of various programs.
-- Note: Need to create the A3S Copy to file with the necessary data for last step.
-- Work to reduce the dependencies required for running the code as an executable file.
+This repo contains the base code and instructions for how to use the executible file processor to clean the files from GTIMs as well as directions for how to recompile and update the program in the future. On occassion, the software will be updated to account for bug fixes and changes due to GTIMs output. Please refer to the top line to ensure that your program is up-to-date with the most current push. 
 
-
-#### 22 Mar Update
-- Dashboard successfully amended to enable daily schedule refreshes at 1230 local.
-- T6 student data looks good and filtering/slicing interactions have been fixed such that the table at the bottom is appropriate for all flights.
-- Python code/test run of a .exe file on a government computer was successful. Some concerns lie ahead - in particular the concern regarding errors and debugging. This may mean that re-compliling the .exe file and re-DoD safeing it may be the only option. The current .exe does not enable users to edit the code. However, the GUI is able to show up and the code doesn't fail upon running. An additional concern is the shear size and start up of the compiler and file size. The script is fairly small, but apparently uses may dependencies. There may be some tinkering to make sure that many additional dependencies can be removed without breaking the program.
-- Next steps:
-  - Involve improving the flow and creating a .readme and instruction file for how to use the code
-  - Creating extra buttons in the GUI for help and instructions.
-  - Option for the GUI to amend code/provide directions for how to amend the code.
-  - also spit out excel file with lined data to make the lives of the scheduling shop easier.
-
-#### 11 Mar Update
-- More work completed on reformatting the A3S tracker. Main data input sheets appear to be in a format that is likely conducive to more data processing programs and scripts.
-- Some preliminary work on plotting in python to make sure that the data is legible and plotable. Conducted a bit of testing to see how the format of the xlsm file needs to be for simple decoding and ingesting.
-- Approaching stage where the Power BI software is needed to thoroughly debug and refine the format for the tracker.
-To dos for later:
-- Will probably examine the coding of the GUI based on notes below.
-- Testing of the .exe file to run and process scripts.
-
-#### 7 Mar Update
-- [x] Successfully created an initial GUI that's able to load files and run a "processing" script that puts them in a selected output folder.
-Some additional	 features for the GUI that are under consideration
- - [ ] Creating an option for users to make exceptions for a specific call (i.e. T-6 24-08 has more syllabus days due to policy, but GTIM's doesn't report this.
- - [ ] Creating an output/terminal which conveys error messages when an error occurs.
- - [ ] Creating an option to enable users to open up the source code for the processing script
- - [ ] Creating a button which provides a README/instruction for how to use the program/what it does, where the github is and creating issue requests and so on.
-Data processing notes:
-- The A3S Tracker file needs to be updated and revised in a format that a computer can understand. A full review and understanding of the file is required ot make the changes such that python can read the input and update automatically... but more importantly, for the A3S Tracker file to be in a format that charts can be created from it and merged across multiple sheets.
-	- Before testing in Power BI, this will need to be tested in Python to demonstrate feasibility.
- 	- In addition, particular features of Power BI - which suggests more of a data splicing capability rather than a predictive capability means that prediction is rather going to be "pre-calculated". This also implies that data processing or another script is necessary in the future to conduct predictive analyses. 
-
-#### 29 Feb Update
-- Fixed the bug caused by missing data creating a misalignment in the data for new classes that don't have populated data.
-- Fixed the automatic formating of Completed/Extra/Syllabus into a datetime format. (Kept it as a string)
-- Talked to the Small Computer Shop to see the status of the Power BI software - TBD. Maybe... by next week?
-- Working on how to integrate the data into a cloud/microsoft environment.
-	- [x] I was successfully able to create a OneDrive instance on the local computer of the A5/9 Teams folder. This means a script can operate on local drives and save "locally" to the OneDrive which will automatically sync to the Teams website. This then could enable a user to update files which anyone with a Teams interface or link can access. **THIS IS A HUGE DEVELOPMENT**.
-- Examined PyInstaller and py2exe. These both seem like promising choices, but more informaiton and testing is required of the original script to make sure that it will run consistently and work as intended.
-- Considering general process for how this code will be used for future continuity:
+- The general process for how this code works:
   1) User or script will download daily program files from GTIMs. (If a script, will need to confirm GTIMs access and OAuth access for Sharepoint access to a Teams Channel/Folder).
   2) These files will be placed in a folder that the python scripts knows to look for and process them accordingly. I.e. "Todays GTIMs Files"
   3) The processing will result in the creation of cleaned data tables which will be appended to existing tables which are located on a local OneDrive Instance. I.e. "DashBoard Source Files"
   4) OneDrive will sync those files to the cloud.
   5) Upon syncing those files to the cloud, the Power BI or _other platform_ will be able to access the refreshed data and provide the insights possibly on a daily level.
 
-Given these updates, the tasks for 1 Mar are as follows (will move up to the 1 Mar update after working):
-- [ ] Adjust the script such that the code can incorporate numerous text files in a folder, and then write to and add to a csv. *Consider making a large CSV to test runtime for appending only to the end without reading it*
-- [ ] Process the new files to add lines to the A3S tracker. Multiple options exist for this:
-	- One option is to leave the file as is and print out the lines that should be copy/pasted into the file.
- 	- The likely better alternative is to recreate the A3S file such that a computer can interpret the file and automatically append the rows. (Confirm with Greg to see if this is feasible.)
-- [ ] Adjust version to better prepare it for running as a .py instead of a notebook.
-- [ ] Look into GUI creation and functionality (what features would be needed?)
-
-#### 28 Feb Update
-Working on/Completed:\
-- [X] [unchecked] Confirm that the code works with T38, IFF, and associated PIT tables.
-	- [X] IFF
- 		- [X] Note that a glitch was uncovered. GTIMs fails to output for the test files empty spaces: i.e. the text file won't maintain the structure with "X,Y,,Z", but rather "X,Y,Z". This mainly happens with new students.
-   		- [X] Plan to fix is to reorient and rebuild the structure based based on what the size *should* be. A helpful marker perhaps is to use the "Completd / Extra / Syllabus" column to 'center' the data. This may work because that data is inherently textual and the structure of it is unique compared to all other entries and their formats.
-- [X] Look into py2exe. This is a package that converts the python script into a computer executable (.exe) function. This then may allow users without python the ability to run and execute the script without needing python. Tests and functions for a GUI will be required to enable future long term usage.
-	- [ ] (29 Feb Update) py2exe or pyInstaller are two different options. Given that the script location and the file location will likely vary over the iterations of LTs, there's likely a need to develop a GUI to help with those who don't have coding knowledge and to make it easier for reproducibility. 
-- [X] Check the date format, 12/1/68 gets converted to 12/1/1968. It needs to remain a text input.
-#### 27 Feb Update
-Currently achieved:
-- [x] Able to read GTIMs data and generate a cleaned Panadas dataframe.
-- [x] Able to segment data based on class, student, flight and so on.
-- [X] [Recheck 29 Feb] Confirm that the code works with T38, IFF, and associated PIT tables.
-	- [X] T38
-	- [X] [Updated again 29 Feb] IFF
-	- [X] T6 PIT
-	- [X] T38 PIT
-	- [X] IFF PIT
-
-Future Tasks and Considerations:
-- [ ] Need to find a way to code it up and append to a large baseline table without needing to load the whole csv/sheet. Current information suggests the use of a csv file and csv_writer to update and add the lines. This would imply that for every new file input, use a script to ingest the data and write to csv file.
-- [ ] Will need to experiment (pending Power BI desktop app), how quickly the files run. After 1 year, combined file size can start to get cumbersome ~10 MB. TBD on how significant this will be for slowing performance for end users.
-	- [ ] Consider adding in a code snippit such that when a class is complete, it removes the class from the main file and saves the entire rest of the data to an archived file for just that class. This would ensure, that the commander's dashboard only contains active flying classes.
-- [ ] An additional consideration is to create a GUI on my own. Would need to be something accessible by anyone on Teams/online. The online access will need the ability to porthole to Teams. (Probably best to keep it begrudgingly with PowerBI).
-- [ ] Recreate the A3S file in a format that a computer can read (csv file). Take daily data and append to those files and rewrite those to a master Excel File. 
-
-Required calculations that need to be included within the data:
-- [ ] Updated graduation date (additional column)
-	- [ ] Once data is ingested per day, calculate the projected graduation date for each student and therefore per class.
-	- [ ] Be able to filter per student within each flight
-- [ ] Calculate and present the data for the A3S table - Per class/program - calculate the following:
-
+An example of the processed data for csvs will look like the following:
 | Syllabus Days | Studs | Studs Complete | Flight Events | Avg Inc. | Inc. Days | Max Flight Events | Max Inc | Min Flight Events | Min Inc |
 | ------------- | ----- | -------------- | ------------- | -------- | --------- | ----------------- | ------- | ----------------- | ------- |
 
+### Changes to the Code
+On occassion, changes within GTIMs and file permissions may require the adjustment of the code. Further, individuals seeking to ammend the code with feature adds are welcome to do so. The instructions for how to changes and recompile are below:
+0 ) Ensure you have a computer with python (ideally Anaconda) installed.
+1 ) After making changes to the script (recommend testing in Jupyter notebook for compatibility and testing of code), then run the following lines in an Anaconda Command Prompt. This step is recommended to reduce the overall file size of the executable file. In the Anaconda Command Prompt, run the following lines and adjust the directory as appropriate:
+```
+conda create --name myenv python=3.8
+conda activate myenv
+conda install tkinter os json datetime numpy pandas openpyxl
+pip install pyinstaller [comment:note that in some instances, you may need to remove pathlib for pyinstaller to run appropriately]
+cd path\to\your\script
+```
+Then, run pyinstaller:
+Optional: ensure you have the upx executable file compiler to enhance the compression size of the compiler. \
+If using upx, to create the executable file, use:
+``` pyinstaller --onefile --windowed --upx-dir=/path/to/upx your_script.py ``` \
+If not using upx:
+``` pyinstaller --onefile --windowed File_Processor_Exe.py ``` 
 
-This repo contains multiple tasks. One task involves the create of a systems dynamics model, and the other involves data processing raw GTIMs data for processing into a format for power BI.
-### Power BI Tasks:
+Then, when the file is successfully compiled, use DoDSafe to provide the application to the users requiring its use. Note that to save it locally, users need to download it as a zip file from DoDSAFE and extract it prior to using the application. 
+
+### Power BI:
+Then, once the data is synced to the OneDrive and pulled as a link in PowerBI, Power BI will do the following:
 1) Power BI intent is to create a Commander's Dashboard:\
 1.a) Types of information to project:
 - A3S Tracker Data and Graphs
@@ -109,9 +47,10 @@ This repo contains multiple tasks. One task involves the create of a systems dyn
 - How many CT sorties the squadron needs a year?
 - Ask and see what additional data/functionality may be desired by the commanders\
 Goal is to then have the data readily available – so it doesn’t take a week to pull it.\
-Reference the code [```Data Restructuring.ipynb```](https://github.com/VanHegeMonster/UPT_Modeling/blob/main/Data%20Restructuring.ipynb)
 
- ### Modeling Thoughts (based on some brainstorming)
+
+
+ ## Modeling Thoughts (based on some brainstorming)
  A System Dynamics (SD) model for the pilot training pipeline would aim to capture the flow of students through the training program, accounting for various inputs and constraints. The goal is to understand how changes in these variables affect the capacity to train pilots and the optimal number of students per class. SD models excel in handling complex, feedback-driven systems, making them suitable for understanding how different factors interact over time.
 #### Components of the SD Model
 A SD model would include several key components, such as:
